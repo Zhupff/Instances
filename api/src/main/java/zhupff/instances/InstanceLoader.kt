@@ -2,14 +2,23 @@ package zhupff.instances
 
 object InstanceLoader {
 
+    @JvmStatic
+    fun read(of: String, loader: ClassLoader?): List<String> {
+        val classLoader = loader ?: Thread.currentThread().contextClassLoader
+        return classLoader.getResources("META-INF/services/$of")
+            .toList()
+            .flatMap { it.openStream().reader(Charsets.UTF_8).readLines() }
+    }
+
+    @JvmStatic
+    fun load(of: String, loader: ClassLoader?): List<Class<*>> {
+        return read(of, loader).map { Class.forName(it) }
+    }
+
     @Suppress("UNCHECKED_CAST")
     @JvmStatic
     fun <T> load(of: Class<T>, loader: ClassLoader?): List<Class<T>> {
-        val classLoader = loader ?: Thread.currentThread().contextClassLoader
-        return classLoader.getResources("META-INF/services/${of.canonicalName}")
-            .toList()
-            .flatMap { it.openStream().reader(Charsets.UTF_8).readLines() }
-            .map { Class.forName(it) as Class<T> }
+        return load(of.canonicalName, loader).map { it as Class<T> }
     }
 
     @JvmStatic
@@ -42,6 +51,10 @@ object InstanceLoader {
         return load(of, loader).lastOrNull(condition)?.getConstructor()?.newInstance()
     }
 }
+
+fun readInstancesOf(of: String, loader: ClassLoader? = null): List<String> = InstanceLoader.read(of, loader)
+
+fun loadInstancesOf(of: String, loader: ClassLoader? = null): List<Class<*>> = InstanceLoader.load(of, loader)
 
 inline fun <reified T> loadInstancesOf(loader: ClassLoader? = null): List<Class<T>> = InstanceLoader.load(T::class.java, loader)
 
