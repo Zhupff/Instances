@@ -5,7 +5,6 @@ import com.google.devtools.ksp.symbol.KSAnnotated
 import com.google.devtools.ksp.symbol.KSClassDeclaration
 import com.google.devtools.ksp.symbol.KSFile
 import com.google.devtools.ksp.symbol.KSType
-import com.google.devtools.ksp.validate
 
 class KSP : SymbolProcessorProvider, SymbolProcessor {
 
@@ -22,7 +21,6 @@ class KSP : SymbolProcessorProvider, SymbolProcessor {
             resolver.getKSNameFromString(InstanceOf::class.java.canonicalName)
         )?.asType(emptyList())?.let { annotationType ->
             resolver.getSymbolsWithAnnotation(InstanceOf::class.java.canonicalName)
-                .filter { it.validate() }
                 .mapNotNull { it as? KSClassDeclaration }
                 .forEach { symbol ->
                     (symbol.annotations.find { it.annotationType.resolve() == annotationType }

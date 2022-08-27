@@ -21,15 +21,12 @@ class MainActivity : Activity() {
     }
 
     private fun sample() {
-        createInstancesOf<IA>().forEach { Log.i("createInstancesOf", "$it") }
-        createInstancesOf<IB> { it != ImplC::class.java }.forEach { Log.i("createInstancesOf", "$it") }
-        createFirstInstanceOrNull<IA>().let { Log.i("createFirstInstanceOrNull", "$it") }
-        createFirstInstanceOrNull<IB> { it != ImplC::class.java }.let { Log.i("createFirstInstanceOrNull", "$it") }
-        createLastInstanceOrNull<IA>().let { Log.i("createLastInstanceOrNull", "$it") }
-        createLastInstanceOrNull<IB> { it != ImplC::class.java }.let { Log.i("createLastInstanceOrNull", "$it") }
-
-        readInstancesOf(RuntimeAnnotation::class.java.canonicalName!!).forEach { Log.d("readInstancesOf", it) }
-        loadInstancesOf(RuntimeAnnotation::class.java.canonicalName!!).forEach { Log.d("loadInstancesOf", "${it}") }
+        val instanceLoader = InstanceLoader(application.classLoader)
+        instanceLoader.read(RuntimeAnnotation::class.java.canonicalName!!).forEach { Log.d("read instances of RuntimeAnnotation", it) }
+        instanceLoader.load(RuntimeAnnotation::class.java.canonicalName!!).forEach { Log.d("read instances of RuntimeAnnotation", "$it") }
+        instanceLoader.create<IA>().forEach { Log.i("create instances of IA", "$it") }
+        instanceLoader.create<IB> { it != ImplC::class.java }.forEach { Log.i("create instances of IB", "$it") }
+        instanceLoader.createOne<IA> { list -> list.find { it == ImplC::class.java } }.let { Log.i("create one instance of IA", "$it") }
     }
 }
 
