@@ -6,13 +6,11 @@
 
 ## Download
 
-Add `jitpack` maven to root build.gradle.
+Add `jitpack` maven.
 
 ```groovy
-buildscript {
-    repositories {
-        maven { url 'https://jitpack.io' }
-    }
+repositories {
+    maven { url 'https://jitpack.io' }
 }
 ```
 
