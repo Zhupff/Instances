@@ -11,7 +11,6 @@ if (System.getenv("JITPACK") == "true") {
                     from components.java
                     groupId = "com.github.Zhupff.Instances"
                     artifactId = project.name
-                    version = "${System.getenv("GIT_BRANCH")}-${System.getenv("GIT_COMMIT")}"
                 }
             }
         }
