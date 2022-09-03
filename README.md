@@ -1,8 +1,10 @@
 # Instances
 
-[![](https://jitpack.io/v/Zhupff/Instances.svg)](https://jitpack.io/#Zhupff/Instances)
-
 > This project will keep `SNAPSHOT`, you can fork and release by yourself.
+
+## Version
+
+[![](https://jitpack.io/v/Zhupff/Instances.svg)](https://jitpack.io/#Zhupff/Instances)
 
 ## Download
 
@@ -18,8 +20,8 @@ Then add dependencies to module build.gradle.
 
 ```groovy
 dependencies {
-    implementation 'com.github.Zhupff.Instances:api:main-SNAPSHOT'
-    annotationProcessor 'com.github.Zhupff.Instances:compiler:main-SNAPSHOT'
+    implementation 'com.github.Zhupff.Instances:api:$version'
+    annotationProcessor 'com.github.Zhupff.Instances:compiler:$version'
     // also support kapt and ksp.
 }
 ```

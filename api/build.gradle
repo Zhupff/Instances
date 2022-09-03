@@ -1,18 +1,2 @@
 apply plugin: "org.jetbrains.kotlin.jvm"
-apply plugin: "maven-publish"
-
-afterEvaluate {
-    publishing {
-        repositories {
-            it.mavenLocal()
-        }
-        publications {
-            jitpack(MavenPublication) {
-                from components.java
-                groupId = "com.github.Zhupff.Instances"
-                artifactId = project.name
-                version = "main-SNAPSHOT"
-            }
-        }
-    }
-}
+apply from: rootProject.file("gradle/scripts/publish.gradle")
