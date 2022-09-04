@@ -3,8 +3,8 @@
     package="zhupff.instances">
 
     <application
-        android:icon="@drawable/ic_launcher"
-        android:label="Instances">
+        android:icon="@drawable/logo"
+        android:label="G-Instances">
         <activity
             android:name=".MainActivity"
             android:exported="true">
